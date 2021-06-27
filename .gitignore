@@ -1,0 +1,4 @@
+*.log
+bot_token.py
+.idea/*
+__pycache__/*
