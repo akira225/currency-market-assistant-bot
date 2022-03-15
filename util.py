@@ -122,6 +122,8 @@ def construct_reply(text):
             return msg_response
         if text.find("курс") > -1 or text.find("валют") > -1 or text.find("сводк") > -1 or text.find(
                 "kurs") > -1 or text.find("data") > -1 or text.find("данные") > -1:
+            msg_response = msg_response + "Данный функционал временно не поддерживается"
+            return msg_response
             msg_response = msg_response + "<i>" + date_provided + ":</i>\n"
             for currency in currencies_eng:
                 data = get_cb_data_date(date_provided, currency)
@@ -170,6 +172,8 @@ def construct_reply(text):
         if len(currencies_provided) > 0:
             for currency in currencies_provided:
                 currencies_provided_eng.append(currencies_dict[currency])
+        msg_response = msg_response + "Данный функционал временно не поддерживается"
+        return msg_response
         msg_response = msg_response + date_provided + ":\n"
         for currency in currencies_provided_eng:
             data = get_cb_data_date(date_provided, currency)

@@ -20,14 +20,14 @@ class TestReply(unittest.TestCase):
             expected_reply1 = """Ответ на ваш запрос:
 
 <b>Sberbank:</b>
-USD:<i><u> Покупка</u> - 70.36
-          <u>Продажа</u> - 74.09</i>
+USD:<i><u> Покупка</u> - 111.16
+          <u>Продажа</u> - 132.67</i>
 """
             expected_reply2 = """Ответ на ваш запрос:
 
 <b>Sberbank:</b>
-EUR:<i><u> Покупка</u> - 84.18
-          <u>Продажа</u> - 88.19</i>
+EUR:<i><u> Покупка</u> - 119.03
+          <u>Продажа</u> - 143.25</i>
 """
             self.assertEqual(reply1, expected_reply1)
             self.assertEqual(reply2, expected_reply2)
@@ -47,17 +47,17 @@ EUR:<i><u> Покупка</u> - 84.18
             expected_reply1 = """Ответ на ваш запрос:
 
 <b>Vtb:</b>
-CNY:<i><u> Покупка</u> - 10.84
-          <u>Продажа</u> - 11.52</i>
+CNY:<i><u> Покупка</u> - 16.66
+          <u>Продажа</u> - 26.11</i>
 """
             expected_reply2 = """Ответ на ваш запрос:
 
 <b>Vtb:</b>
-GBP:<i><u> Покупка</u> - 97.35
-          <u>Продажа</u> - 103.5</i>
+GBP:<i><u> Покупка</u> - 131.95
+          <u>Продажа</u> - 182.85</i>
 <b>Vtb:</b>
-EUR:<i><u> Покупка</u> - 84.35
-          <u>Продажа</u> - 88</i>
+EUR:<i><u> Покупка</u> - 120
+          <u>Продажа</u> - 159.8</i>
 """
             self.assertEqual(reply1, expected_reply1)
             self.assertEqual(reply2, expected_reply2)
@@ -75,20 +75,10 @@ EUR:<i><u> Покупка</u> - 84.35
             expected_reply = """Ответ на ваш запрос:
 
 <b>Sberbank:</b>
-<i><u>Доллар сша</u>:  Покупка - </i>70.36
-<i>Продажа - </i>74.09
-<i><u>Евро</u>:  Покупка - </i>84.18
-<i>Продажа - </i>88.19
-<i><u>Фунт стерлингов</u>:  Покупка - </i>96.11
-<i>Продажа - </i>104.44
-<i><u>Белорусский рубль</u>:  Покупка - </i>26
-<i>Продажа - </i>32.26
-<i><u>Казахстанский тенге</u>:  Покупка - </i>11.84
-<i>Продажа - </i>23.39
-<i><u>Швейцарский франк</u>:  Покупка - </i>75.68
-<i>Продажа - </i>81.86
-<i><u>Японская йена</u>:  Покупка - </i>62.4
-<i>Продажа - </i>67.98
+<i><u>Доллар сша</u>:  Покупка - </i>111.16
+<i>Продажа - </i>132.67
+<i><u>Евро</u>:  Покупка - </i>119.03
+<i>Продажа - </i>143.25
 
 """
             self.assertEqual(reply, expected_reply)
@@ -102,19 +92,19 @@ EUR:<i><u> Покупка</u> - 84.35
             message1 = "курс"
             reply1 = util.construct_reply(message1)
             mocked_get.assert_called()
-            message2 = "курс иены"
+            message2 = "курс юаня"
             reply2 = util.construct_reply(message2)
             expected_reply1 = """Ответ на ваш запрос:
 
- <b>Фунт стерлингов Соединенного королевства</b> - <i>100.37 RUB</i>
- <b>Доллар США</b> - <i>72.17 RUB</i>
- <b>Евро</b> - <i>86.19 RUB</i>
- <b>Китайский юань</b> - <i>11.18 RUB</i>
-100 <b>Японских иен</b> - <i>65.17 RUB</i>
+ <b>Фунт стерлингов Соединенного королевства</b> - <i>151.52 RUB</i>
+ <b>Доллар США</b> - <i>115.2 RUB</i>
+ <b>Евро</b> - <i>127.23 RUB</i>
+ <b>Китайский юань</b> - <i>18.22 RUB</i>
+100 <b>Японских иен</b> - <i>99.45 RUB</i>
 """
             expected_reply2 = """Ответ на ваш запрос:
 
-100 <b>Японских иен</b> - <i>65.17 RUB</i> (-0.07)
+ <b>Китайский юань</b> - <i>18.22 RUB</i> (-0.25)
 """
 
             self.assertEqual(reply1, expected_reply1)
@@ -134,30 +124,3 @@ EUR:<i><u> Покупка</u> - 84.35
 
         self.assertEqual(reply1, expected_reply1)
         self.assertEqual(reply2, expected_reply2)
-
-    def test_reply_cb_by_date(self):  # relies on central bank api
-        message1 = "фунт стерлингов 01.01.1930"
-        reply1 = util.construct_reply(message1)
-        message2 = "курс 20.08.2029"
-        reply2 = util.construct_reply(message2)
-        message3 = "курс 05.05.2012"
-        reply3 = util.construct_reply(message3)
-        expected_reply1 = """Ответ на ваш запрос:
-
-Некорректная дата"""
-        expected_reply2 = """Ответ на ваш запрос:
-
-Некорректная дата"""
-        expected_reply3 = """Ответ на ваш запрос:
-
-<i>05.05.2012:</i>
- <b>Фунт стерлингов соединенного королевства</b> - 47.87 RUB
- <b>Доллар сша</b> - 29.59 RUB
- <b>Евро</b> - 38.92 RUB
-10 <b>Китайских юаней</b> - 46.93 RUB
-100 <b>Японских иен</b> - 36.91 RUB
-"""
-
-        self.assertEqual(reply1, expected_reply1)
-        self.assertEqual(reply2, expected_reply2)
-        self.assertEqual(reply3, expected_reply3)

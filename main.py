@@ -1,6 +1,6 @@
 import telebot
-from bot_token import bot_token
 from util import *
+import os
 import logging
 
 file_handler = logging.FileHandler("app.log")
@@ -12,7 +12,7 @@ logger.setLevel(logging.INFO)
 logger.addHandler(file_handler)
 
 try:
-    bot = telebot.TeleBot(bot_token)
+    bot = telebot.TeleBot(os.environ['TELEGRAM_BOT_TOKEN'])
 except Exception as ex:
     logger.error("Bot init error : " + str(ex))
     exit(-1)
